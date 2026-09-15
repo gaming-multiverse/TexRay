@@ -1,0 +1,114 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="TexRay.MainWindow"
+        Title="TexRay - GamingMultiverse"
+        Icon="/Assets/app.ico"
+        Width="980" Height="780" MinWidth="820" MinHeight="700"
+        WindowStartupLocation="CenterScreen"
+        Background="#0C0808"
+        DragDrop.AllowDrop="True">
+
+  <Grid>
+
+    <!-- ================================ HOME ================================ -->
+    <StackPanel x:Name="HomeView" Width="430" Spacing="14"
+                HorizontalAlignment="Center" VerticalAlignment="Center">
+      <Image x:Name="HomeLogo" Source="/Assets/gm_logo.png" Width="88" Height="88" HorizontalAlignment="Center" Margin="0,0,0,2" />
+      <TextBlock Text="TexRay - GamingMultiverse" FontSize="23" FontWeight="SemiBold" HorizontalAlignment="Center" />
+      <TextBlock x:Name="HomeSubtitle" Text="FiveM ped compliance scanner" Foreground="#9A8F8F" HorizontalAlignment="Center" Margin="0,0,0,14" />
+      <Button x:Name="BtnModeYdd" Classes="tile" Content="CheckerYDD" />
+      <Button x:Name="BtnModeEmbComp" Classes="tile" Content="Embedded Compression" />
+      <Button x:Name="BtnModeTexComp" Classes="tile" Content="Texture Compression" />
+      <Button x:Name="BtnModeEmbRes" Classes="tile" Content="Texture Resolution Scanner" />
+      <Button x:Name="BtnModeYtdRes" Classes="tile" Content="Resolution Scanner 2 (YTD)" />
+      <Button x:Name="BtnModeFull" Classes="tile" Content="Full Scan" Foreground="#FF0000" />
+      <Button x:Name="BtnInfo" Classes="tile" Content="ⓘ  Info" Width="150" Height="36" FontSize="13"
+              HorizontalAlignment="Center" Foreground="#9A8F8F" Margin="0,6,0,0" />
+    </StackPanel>
+
+    <!-- ================================ SCAN ================================ -->
+    <Grid x:Name="ScanView" IsVisible="False" Margin="20" RowDefinitions="Auto,*">
+      <Button x:Name="BtnBackScan" Classes="tile" Content="←  Back" Width="110" Height="38" HorizontalAlignment="Left" />
+      <StackPanel Grid.Row="1" Width="680" Spacing="10" HorizontalAlignment="Center" Margin="0,8,0,0">
+        <TextBlock x:Name="ModeTitle" FontSize="22" FontWeight="SemiBold" HorizontalAlignment="Center" />
+        <TextBlock x:Name="ModeSubtitle" Foreground="#9A8F8F" HorizontalAlignment="Center" />
+        <Button x:Name="BtnSearch" Classes="tile" Content="SEARCH" Width="220" HorizontalAlignment="Center" Margin="0,8,0,0" />
+        <TextBox x:Name="PathBox" AutomationProperties.Name="Scan path"
+                 Watermark="Folder to scan — SEARCH, paste a path, or drop a folder here" />
+
+        <StackPanel x:Name="RowGeoV" Orientation="Horizontal" Spacing="12">
+          <CheckBox x:Name="ChkVertices" Content="Vertices" IsChecked="True" MinWidth="150" />
+          <NumericUpDown x:Name="NumVertices" Minimum="1" Maximum="10000000" Increment="1000" Value="60000" FormatString="N0" Width="170" />
+        </StackPanel>
+
+        <StackPanel x:Name="RowGeoP" Orientation="Horizontal" Spacing="12">
+          <CheckBox x:Name="ChkPolygons" Content="Polygons" IsChecked="True" MinWidth="150" />
+          <NumericUpDown x:Name="NumPolygons" Minimum="1" Maximum="10000000" Increment="1000" Value="60000" FormatString="N0" Width="170" />
+        </StackPanel>
+
+        <CheckBox x:Name="ChkItemTotals" Content="Whole clothing items (sum of parts)" IsChecked="True" />
+
+        <StackPanel x:Name="RowRes" Orientation="Horizontal" Spacing="12">
+          <TextBlock Text="Max resolution" VerticalAlignment="Center" MinWidth="150" />
+          <NumericUpDown x:Name="NumResolution" Minimum="4" Maximum="16384" Increment="512" Value="2048" FormatString="N0" Width="170" />
+          <TextBlock Text="px  (2048 = 2K)" Foreground="#9A8F8F" VerticalAlignment="Center" />
+        </StackPanel>
+
+        <StackPanel x:Name="RowFmt" Orientation="Horizontal" Spacing="12">
+          <TextBlock Text="Allowed formats" VerticalAlignment="Center" MinWidth="150" />
+          <TextBox x:Name="FormatsBox" Text="DXT1,DXT5,BC7" Width="250" />
+        </StackPanel>
+
+        <StackPanel x:Name="RowLimits" Orientation="Horizontal" Spacing="12">
+          <TextBlock Text="Max YTD files" VerticalAlignment="Center" MinWidth="150" />
+          <NumericUpDown x:Name="NumMaxYtd" Minimum="1" Maximum="100000" Increment="10" Value="200" Width="150" />
+          <TextBlock Text="Max total MB" VerticalAlignment="Center" Margin="14,0,0,0" />
+          <NumericUpDown x:Name="NumMaxSize" Minimum="1" Maximum="1000000" Increment="10" Value="200" Width="150" />
+        </StackPanel>
+
+        <CheckBox x:Name="ChkExtraTypes" Content="Include .yft / .ydr / .ycd files" IsChecked="True" />
+
+        <ProgressBar x:Name="Progress" Height="12" Minimum="0" Maximum="1" Margin="0,10,0,0" />
+        <TextBlock x:Name="StatusText" Foreground="#9A8F8F" FontSize="12" MinHeight="16" />
+        <Button x:Name="BtnScan" Classes="tile" Content="SCAN" Width="220" HorizontalAlignment="Center" Margin="0,6,0,0" />
+      </StackPanel>
+    </Grid>
+
+    <!-- ============================== RESULTS =============================== -->
+    <Grid x:Name="ResultsView" IsVisible="False" Margin="20" RowDefinitions="Auto,Auto,*,Auto">
+      <DockPanel>
+        <Button x:Name="BtnBackResults" Classes="tile" Content="←  Back" Width="110" Height="38" HorizontalAlignment="Left" />
+        <TextBlock x:Name="VerdictText" DockPanel.Dock="Right" FontSize="17" FontWeight="SemiBold" VerticalAlignment="Center" />
+        <TextBlock x:Name="ResultsTitle" FontSize="20" FontWeight="SemiBold" Margin="16,0,0,0" VerticalAlignment="Center" />
+      </DockPanel>
+
+      <TextBlock x:Name="SummaryText" Grid.Row="1" Foreground="#D2C9C9" FontSize="12" TextWrapping="Wrap" Margin="0,10,0,10" />
+
+      <!-- neutral text for the data itself; the brand red only marks the violation Status -->
+      <DataGrid x:Name="ResultsGrid" Grid.Row="2"
+                IsReadOnly="True" AutoGenerateColumns="False"
+                CanUserReorderColumns="False" CanUserResizeColumns="True"
+                Background="#150D0D" Foreground="#EAE7E7"
+                GridLinesVisibility="Horizontal" HeadersVisibility="Column">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Category" Binding="{Binding Category}" Width="1.1*" Foreground="#9A8F8F" />
+          <DataGridTextColumn Header="File" Binding="{Binding File}" Width="2*" Foreground="#EAE7E7" />
+          <DataGridTextColumn Header="Item" Binding="{Binding Item}" Width="1.7*" Foreground="#C6BBBB" />
+          <DataGridTextColumn Header="Detail" Binding="{Binding Detail}" Width="1.6*" Foreground="#C6BBBB" />
+          <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="1.2*" Foreground="#FF4D4D" FontWeight="SemiBold" />
+        </DataGrid.Columns>
+      </DataGrid>
+
+      <DockPanel Grid.Row="3" Margin="0,14,0,0">
+        <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="12">
+          <Button x:Name="BtnExportHtml" Classes="tile" Content="EXPORT HTML" Width="170" Height="40" Foreground="#FF0000" />
+          <Button x:Name="BtnExportJson" Classes="tile" Content="EXPORT JSON" Width="160" Height="40" />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Spacing="12">
+          <Button x:Name="BtnCopy" Classes="tile" Content="COPY TEXT" Width="150" Height="40" />
+          <Button x:Name="BtnFix" Classes="tile" Content="FIX TEXTURES" Width="170" Height="40" Foreground="#60BE8C" />
+        </StackPanel>
+      </DockPanel>
+    </Grid>
+  </Grid>
+</Window>

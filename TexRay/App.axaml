@@ -1,0 +1,52 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="TexRay.App"
+             RequestedThemeVariant="Dark">
+
+  <Application.Resources>
+    <!-- GamingMultiverse brand accent (#FF0000), used by checkboxes / focus / selection -->
+    <Color x:Key="SystemAccentColor">#FF0000</Color>
+    <Color x:Key="SystemAccentColorDark1">#E00000</Color>
+    <Color x:Key="SystemAccentColorDark2">#C00000</Color>
+    <Color x:Key="SystemAccentColorDark3">#A00000</Color>
+    <Color x:Key="SystemAccentColorLight1">#FF3333</Color>
+    <Color x:Key="SystemAccentColorLight2">#FF6666</Color>
+    <Color x:Key="SystemAccentColorLight3">#FF9999</Color>
+  </Application.Resources>
+
+  <Application.Styles>
+    <FluentTheme />
+    <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+
+    <!-- rounded dark tile buttons on the GM near-black/red palette,
+         with a subtle brand-red outline for depth -->
+    <Style Selector="Button.tile">
+      <Setter Property="Background" Value="#241818" />
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="BorderBrush" Value="#6EFF0000" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="10" />
+      <Setter Property="Height" Value="48" />
+      <Setter Property="FontSize" Value="15" />
+      <Setter Property="HorizontalAlignment" Value="Stretch" />
+      <Setter Property="HorizontalContentAlignment" Value="Center" />
+      <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Button.tile:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="#341F1F" />
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="BorderBrush" Value="#B4FF0000" />
+    </Style>
+    <Style Selector="Button.tile:pressed /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="#3D2424" />
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="BorderBrush" Value="#FF0000" />
+    </Style>
+
+    <Style Selector="DataGridColumnHeader">
+      <Setter Property="Foreground" Value="#9A8F8F" />
+      <Setter Property="Background" Value="#1E1313" />
+      <Setter Property="FontSize" Value="12" />
+    </Style>
+  </Application.Styles>
+</Application>
